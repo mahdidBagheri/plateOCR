@@ -6,5 +6,5 @@ batch_size = 8
 prediction_head_num = 16
 prediction_length = len(plate_format) + blank_num
 alphabet_length = 36
-train_dataset_size = 4800
-test_dataset_size = 800
+train_dataset_size = 800
+test_dataset_size = 80

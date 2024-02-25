@@ -10,11 +10,11 @@ class OCRNet(nn.Module):
         super().__init__(*args, **kwargs)
         self.c_block2 = ConvBlock(in_channel=3, out_channel=128, kernel_size=(5,5), padding=(2,2), stride=(2,2), act="LReLU", pooling_size=(2,1)) # 128 -> 32
         self.c_block3 = ConvBlock(in_channel=128, out_channel=256, kernel_size=(5,5), padding=(2,2), stride=(2,2), act="LReLU", pooling_size=(2,1)) # 32 -> 8
-        self.c_block4 = ConvBlock(in_channel=256, out_channel=256, kernel_size=(3,3), padding=(1,1), stride=(2,2), act="LReLU", pooling_size=(2,1)) # 8 -> 4
-        self.c_block5 = ConvBlock(in_channel=256, out_channel=512, kernel_size=(2,2), padding=(0,0), stride=(1,1), act="ReLU", pooling_size=(1,1)) # 4 -> 1
+        self.c_block4 = ConvBlock(in_channel=256, out_channel=512, kernel_size=(3,3), padding=(1,1), stride=(2,2), act="LReLU", pooling_size=(2,1)) # 8 -> 4
+        self.c_block5 = ConvBlock(in_channel=512, out_channel=1024, kernel_size=(2,2), padding=(0,0), stride=(1,1), act="ReLU", pooling_size=(1,1)) # 4 -> 1
 
         self.lstm = nn.LSTM(input_size=63, hidden_size=int(prediction_head_num/2), bidirectional=True)
-        self.embedding = nn.Linear(512, nOut)
+        self.embedding = nn.Linear(1024, nOut)
 
         self.softmax = nn.Softmax()
 

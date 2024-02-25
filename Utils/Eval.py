@@ -34,9 +34,9 @@ class Eval:
         return scores
 
     def char_accuracy(self, predictions, labels):
-        words, truths = predictions, extend_text(labels, len(predictions))
+        words, truths = shrink_text(predictions), shrink_text(labels)
         sum_edit_dists = lev.distance(words, truths)
-        sum_gt_lengths = sum(map(len, truths))
+        sum_gt_lengths = sum(map(len, predictions))
         fraction = 0
         if sum_gt_lengths != 0:
             fraction = sum_edit_dists / sum_gt_lengths

@@ -4,7 +4,7 @@ from Model.Model import OCRNet
 import torch
 from Model.Loss import CTCLoss
 from Model.Learner import Learner
-from Config.ModelConfig import epochs, device, learning_rate
+from Config.ModelConfig import epochs, device, learning_rate, lr_decay_rate
 from Config.DatasetConfig import test_dataset_size, train_dataset_size
 
 if __name__ == "__main__":
@@ -17,7 +17,10 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     loss = CTCLoss().to(device)
 
-    learner = Learner(model, loss, optimizer, train_loader, test_loader)
+    lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer=optimizer, gamma=lr_decay_rate)
+
+    learner = Learner(model, loss, optimizer,lr_scheduler, train_loader, test_loader)
+
     for epoch in range(epochs):
         train_results = learner.run_epoch(epoch, val=False)
         test_results = learner.run_epoch(epoch, val=True)

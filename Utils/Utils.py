@@ -23,9 +23,9 @@ def class_lable_to_text(class_lable):
     return s
 
 def shrink_text(text):
-    i = 0
+    i = 1
     while (i < len(text)):
-        if (text[i] == " "):
+        if (text[i] == " " or text[i] == text[i-1]):
             text = text[:i] + text[i+1:]
         else:
             i += 1
